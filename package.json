@@ -1,0 +1,30 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "prisma generate && nuxt prepare"
+  },
+  "dependencies": {
+    "@trpc/client": "^10.45.2",
+    "@trpc/server": "^10.45.2",
+    "@types/sanitize-html": "^2.11.0",
+    "moment": "^2.30.1",
+    "nuxt": "^3.12.2",
+    "rss-parser": "^3.13.0",
+    "sanitize-html": "^2.13.0",
+    "trpc-nuxt": "^0.10.22",
+    "vue": "^3.4.29",
+    "vue-router": "^4.3.3",
+    "zod": "^3.23.8",
+    "nuxt-scheduler": "^0.1.9",
+    "@prisma/client": "^5.15.1",
+    "prisma": "^5.15.1"
+  },
+  "devDependencies": {}
+}
