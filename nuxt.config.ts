@@ -6,16 +6,14 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-scheduler'
   ],
-  ssr: false,
-
+  css: ['~/assets/css/main.css'],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
   app: {
-    head: {
-      link: [
-        {
-          rel: 'stylesheet',
-          href: "https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
-        }
-      ]
-    }
+    head: {}
   }
 })

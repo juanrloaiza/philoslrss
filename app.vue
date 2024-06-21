@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import moment from "moment";
 
-
 const { $client } = useNuxtApp();
 const { data } = await $client.events.useLazyQuery()
 
@@ -12,32 +11,36 @@ const formatDate = (date: string) => {
 </script>
 
 <template>
-  <div class="container pt-6">
-    <h1 class="title has-text-centered">Philos-L List Archive (RSS)</h1>
-    <div v-if="!data" class="is-flex is-justify-content-center is-align-items-center">
+  <div class="bg-gradient-to-b from-white to-blue-200 bg-fixed flex flex-col items-center py-8">
+    <div class="container">
+      <div class="text-center mb-8">
+    <h1 class="drop-shadow-2xl text-4xl font-bold mb-4">Philos-L List Archive (RSS)</h1>
+    <p class="text-xl">A visualization of the latest posts in the Philos-L mailing list.</p>
+  </div>
+    <div v-if="!data" class="flex justify-center">
       <LoadingSpinner />
     </div>
-    <div v-else>
-      <div class="columns is-multiline">
-      <div v-for="event in data" key="event" class="column is-4 p-5  ">
-        <h2 class="is-size-4 mb-2">
+    <div class=" " v-else>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 justify-center">
+      <div v-for="event in data" :key="event.id" class="bg-white p-6 border rounded text-ellipsis overflow-hidden shadow-lg">
+        <h2 class="text-xl font-bold hover:text-slate-600 mb-2">
           <NuxtLink :href="event.link">{{ event.title }}</NuxtLink>
         </h2>
-        <div class="has-text-weight-semibold">
+        <div class="font-semibold">
           {{ event.creator }}
         </div>
         <div class="is-size-7"> {{ formatDate(event.pubDate) }}</div>
-
         <div class="my-3"><span v-html="event.content"></span>
         </div>
       </div>
     </div>
     </div>
   </div>
+  </div>
 </template>
 
 <style scoped>
-.cell{
+.event{
   border: 1px solid #ccc;
   border-radius: 10px;
 }
