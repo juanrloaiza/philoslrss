@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import moment from "moment";
 
-const {$client} = useNuxtApp();
 
+const { $client } = useNuxtApp();
 const { data } = await $client.events.useLazyQuery()
 
 const formatDate = (date: string) => {
   return moment(date).format('DD.MM.YY')
 }
+
 </script>
 
 <template>
@@ -17,8 +18,8 @@ const formatDate = (date: string) => {
       <LoadingSpinner />
     </div>
     <div v-else>
-      <div class="grid is-col-min-3 is-gap-2">
-      <div v-for="event in data" class="cell p-5  ">
+      <div class="columns is-multiline">
+      <div v-for="event in data" key="event" class="column is-4 p-5  ">
         <h2 class="is-size-4 mb-2">
           <NuxtLink :href="event.link">{{ event.title }}</NuxtLink>
         </h2>
