@@ -15,5 +15,14 @@ export default defineNuxtConfig({
   },
   app: {
     head: {}
-  }
+  },
+  nitro: {
+    typescript: {
+      tsConfig: {
+        compilerOptions: {
+          noEmit: true,
+        },
+      },
+    },
+  },
 })
