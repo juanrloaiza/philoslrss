@@ -40,8 +40,8 @@ const getMoreEvents = async() => {
   </div>
   <div v-auto-animate class='flex flex-col items-center'>
       <LoadingSpinner v-if="status == 'pending'"/>
-      <div v-auto-animate class="flex flex-wrap gap-5 justify-center"  v-else>
-      <EventsCard v-for="event in events" :key="event.id" v-bind="event" />
+      <div v-auto-animate class="flex flex-wrap gap-5 justify-center" v-else>
+        <EventsCard v-for="event in events" :key="event.id" v-bind="event" />
       </div>
       <LoadingButton v-if="canGetMore" @click="getMoreEvents()" :is-loading="loading" />
     </div>
