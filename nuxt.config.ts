@@ -4,7 +4,8 @@ export default defineNuxtConfig({
     transpile: ["trpc-nuxt"],
   },
   modules: [
-    'nuxt-scheduler'
+    'nuxt-scheduler',
+    '@formkit/auto-animate/nuxt'
   ],
   css: ['~/assets/css/main.css'],
   postcss: {
