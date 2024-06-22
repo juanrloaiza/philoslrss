@@ -9,30 +9,20 @@ let offset = 0
 const batchSize = 3
 const canGetMore = ref(true)
 
-const loadingButtonData = {
-  text: ref('Load more'),
-  isLoading: ref(false)
-}
-
+const loading = ref(false)
 const getMoreEvents = async() => {
   offset = offset + batchSize;
-
-  loadingButtonData.text.value = "Loading..."
-  loadingButtonData.isLoading.value = true
-
+  loading.value = true
   const {data: newEvents} = await useLazyAsyncData(
     () => $client.events.query({skip: offset})
   )
   
-  if (!newEvents.value) {
-    return
-  }
+  if (!newEvents.value) return
 
   events.value?.push(...newEvents.value)
   canGetMore.value = (newEvents.value.length == batchSize)
 
-  loadingButtonData.text.value = "Load more"
-  loadingButtonData.isLoading.value = false
+  loading.value = false
 }
 
 </script>
@@ -48,25 +38,12 @@ const getMoreEvents = async() => {
       A visualization of the latest posts in the Philos-L mailing list.
     </p>
   </div>
-    <div v-if="status == 'pending'" class="flex justify-center">
-      <LoadingSpinner />
-    </div>
-    <div v-auto-animate class='flex flex-col items-center' v-else>
-      <div v-auto-animate class="flex flex-wrap gap-5 justify-center">
-      <EventsCard 
-        v-for="event in events" 
-        :key="event.id" 
-        v-bind="event" 
-      />
+  <div v-auto-animate class='flex flex-col items-center'>
+      <LoadingSpinner v-if="status == 'pending'"/>
+      <div v-auto-animate class="flex flex-wrap gap-5 justify-center"  v-else>
+      <EventsCard v-for="event in events" :key="event.id" v-bind="event" />
       </div>
-    <button 
-      v-if="canGetMore" 
-      :class="{'hover:opacity-50 opacity-50': loadingButtonData.isLoading.value == true }"
-      class="m-6 p-3 border-2 rounded border-slate-300 bg-white hover:bg-slate-100"
-      @click="getMoreEvents()"
-      >
-      {{ loadingButtonData.text.value }}
-    </button>
+      <LoadingButton v-if="canGetMore" @click="getMoreEvents()" :is-loading="loading" />
     </div>
   </div></div>
 </template>
