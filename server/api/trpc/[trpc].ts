@@ -1,14 +1,19 @@
 import { createNuxtApiHandler } from 'trpc-nuxt'
 import { publicProcedure, router } from '~/server/trpc/trpc'
 import { PrismaClient } from '@prisma/client'
+import { z } from 'zod'
 
 const prisma = new PrismaClient()
 
 export const appRouter = router({
     events: publicProcedure
-        .query(() => prisma.event.findMany(
+        .input(z.object({
+            skip: z.number().default(0)
+        }))
+        .query(async ({ input }) => prisma.event.findMany(
             {
-                take: 10,
+                skip: input.skip,
+                take: 3,
                 orderBy: { pubDate: 'desc' }
             }
         ))
